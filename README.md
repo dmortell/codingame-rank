@@ -1,2 +1,2 @@
 # codingame-rank
-Display your CodinGame rank on your website
+Display your CodinGame rank on your PHP website
