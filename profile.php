@@ -25,16 +25,6 @@ $color   = color($gamer['rank']);
 $suffix  = suffix($gamer['rank']);
 $percent = percent($gamer['rank']);
 
-if ($_GET['fetch']=='json'){
-  $data['tooltip'] = $tooltip;
-  $data['rank']    = $rank;
-  $data['color']   = $color;
-  $data['suffix']  = $suffix;
-  $data['percent'] = $percent;
-  header('Content-Type: application/json; charset=utf-8');
-  exit(json_encode($data));
-}
-
 function suffix($n){
   $s = $n % 10;
   return $s==1 ? "st" : ($s==2 ? "nd" : ($s==3 ? 'rd' : 'th'));
@@ -115,12 +105,21 @@ $html = <<<EOT
 </div>
 EOT;
 
-if ($_GET['fetch']=='html'){
-  $reply = ['html'=>$html];
+if (isset($_GET['fetch'])){
   header('Content-Type: application/json; charset=utf-8');
-  exit(json_encode($reply));
+  if ($_GET['fetch']=='json'){
+    $data['tooltip'] = $tooltip;
+    $data['rank']    = $rank;
+    $data['color']   = $color;
+    $data['suffix']  = $suffix;
+    $data['percent'] = $percent;
+    exit(json_encode($data));
+  }
+  if ($_GET['fetch']=='html'){
+    $reply = ['html'=>$html];
+    exit(json_encode($reply));
+  }
 }
-
 echo $html;
 ?>
 
